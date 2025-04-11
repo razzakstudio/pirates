@@ -3,7 +3,7 @@ Kalpathon 2025 - Lost & Found Portal
 
 Team Members 
 1. Abdul Razzak (BBD UNIVERSITY 1ST YEAR)
-2. Ayush kumar  (BBD UNIVERSITY 1ST YEAR)
+2. Aayush Singh (BBD UNIVERSITY 1ST YEAR)
 3. Hamid Azam   (BBD UNIVERSITY 1ST YEAR)
 
 🔹 Problem Statement:
