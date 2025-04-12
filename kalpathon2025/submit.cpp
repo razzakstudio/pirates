@@ -1,42 +1,34 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <cstdlib>
-
 using namespace std;
 
-string getValue(const string& data, const string& key) {
-    size_t start = data.find(key + "=");
-    if (start == string::npos) return "";
-    start += key.length() + 1;
-    size_t end = data.find("&", start);
-    return data.substr(start, end - start);
-}
-
 int main() {
-    cout << "Content-type: text/html\n\n";
+    cout << "Content-type: text/html\n\n";  // Required CGI header
 
-    string postData;
-    char *lenStr = getenv("CONTENT_LENGTH");
-    if (!lenStr) return 1;
+    // Get environment variables from POST request
+    string data;
+    getline(cin, data);
 
-    int len = atoi(lenStr);
-    for (int i = 0; i < len; ++i)
-        postData += getchar();
+    // Parse type from data (basic way)
+    string type = "";
+    if (data.find("type=lost") != string::npos)
+        type = "lost";
+    else if (data.find("type=found") != string::npos)
+        type = "found";
 
-    string type = getValue(postData, "type");
-    string item = getValue(postData, "item");
-    string desc = getValue(postData, "desc");
-    string location = getValue(postData, "location");
-    string contact = getValue(postData, "contact");
-
+    // Set correct file path
+    string path = "C:/xampp/htdocs/kalpathon2025/";
     string filename = (type == "lost") ? "lost_items.txt" : "found_items.txt";
-    ofstream file(filename, ios::app);
-    file << item << "," << desc << "," << location << "," << contact << "\n";
-    file.close();
 
-    cout << "<h2>Submitted successfully!</h2>";
-    cout << "<a href='index.html'>Go Back</a>";
+    ofstream file(path + filename, ios::app);
+    if (file.is_open()) {
+        file << data << endl;
+        file.close();
+    }
+
+    // Response
+    cout << "<html><body><h2>Item reported successfully!</h2></body></html>";
 
     return 0;
 }
